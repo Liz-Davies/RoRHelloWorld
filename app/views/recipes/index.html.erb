@@ -1,0 +1,34 @@
+<h1>Search For Recipes</h1>
+<a href="?search=amarula">Amarula</a> <a href="?search=chocolate">Chocolate</a> <a href="?search=bread">Bread</a>
+<form>
+	<label for="search-input">Search</label>
+	<input id="search-input" type="text" name="search" value="<%= @search %>"/>
+	<button type="submit">Seach</button>
+</form>
+<% if @recipes != nil %>
+	<% if @recipes.length == 0 %>
+		Oops. We weren't able to find anything for this query.
+	<% else # at least one recipe %>
+		<h1 class="search-title">Recipes for <%= @search.empty? ? 'chocolate' : @search  %></h1>
+		<table>
+			<thead>
+			<tr>
+				<th>Photo</th>
+				<th>Title</th>
+				<th>Ingredients</th>
+			</tr>
+			</thead>
+			<tbody>
+			<% @recipes.each do |recipe| %>
+			<tr>
+				<td><%= link_to(image_tag(recipe["thumbnail"]),recipe['href']) %></td>
+				<td><%= link_to(sanitize(recipe['title']),recipe['href']) %></td>
+				<td><%= recipe['ingredients'] %></td>
+			</tr>
+			<% end %>
+			<tr>
+				</tr>
+			</tbody>
+		</table>
+	<% end #recipes Empty %>
+<% end #recipes nil %>
